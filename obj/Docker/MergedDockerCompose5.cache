@@ -1,0 +1,35 @@
+services:
+  computersangularapp:
+    build:
+      context: C:\Users\rfere\source\repos\ComputersApp
+      dockerfile: ComputersApp.Api/ClientApp/Dockerfile
+    image: computersangularapp
+    ports:
+    - 4200:4200/tcp
+    volumes:
+    - C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Api\ClientApp:/app:rw
+  computersapp:
+    build:
+      args:
+        skip_client_build: "true"
+      context: C:\Users\rfere\source\repos\ComputersApp
+      dockerfile: ComputersApp.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: computersapp
+    ports:
+    - 80/tcp
+    - 443/tcp
+    volumes:
+    - C:\Users\rfere\AppData\Roaming\ASP.NET\Https:/root/.aspnet/https:ro
+    - C:\Users\rfere\AppData\Roaming\Microsoft\UserSecrets:/root/.microsoft/usersecrets:ro
+  ms-sql-server:
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      SA_PASSWORD: MyPassword111
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+    - 1433:1433/tcp
+version: '3.4'

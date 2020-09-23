@@ -1,0 +1,17 @@
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.AssemblyInfoInputs.cache
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.AssemblyInfo.cs
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.csproj.CoreCompileInputs.cache
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Application.deps.json
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Application.runtimeconfig.json
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Application.runtimeconfig.dev.json
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Application.dll
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Application.pdb
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Domain.dll
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Infrastructure.dll
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Infrastructure.pdb
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\bin\Debug\netcoreapp3.1\ComputersApp.Domain.pdb
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.csprojAssemblyReference.cache
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.csproj.CopyComplete
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.dll
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.pdb
+C:\Users\rfere\source\repos\ComputersApp\ComputersApp.Application\obj\Debug\netcoreapp3.1\ComputersApp.Application.genruntimeconfig.cache

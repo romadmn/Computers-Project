@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  ms-sql-server: 
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "MyPassword111"
+        MSSQL_PID: Express 
+    ports:
+      - "1433:1433"
+  computersapp:
+    image: ${DOCKER_REGISTRY-}computersapiapp
+    build:
+      context: .
+      dockerfile: ComputersApp.Api/Dockerfile
+
+  computersangularapp:
+    image: ${DOCKER_REGISTRY-}computersangularapp
+    build:
+      context: .
+      dockerfile: ComputersApp.Api/ClientApp/Dockerfile
+    ports:
+      - "4200:4200" 
+    volumes:
+      - ./ComputersApp.Api/ClientApp:/app
