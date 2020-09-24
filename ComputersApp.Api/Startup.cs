@@ -48,6 +48,7 @@ namespace ComputersApp
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IComputerService, ComputerService>();
             services.AddScoped<ICpuService, CpuService>();
@@ -130,7 +131,7 @@ namespace ComputersApp
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseProxyToSpaDevelopmentServer("http://computersangularapp:4200");
+                    spa.UseProxyToSpaDevelopmentServer("http://computers.angular.app:4200");
                 }
             });
 

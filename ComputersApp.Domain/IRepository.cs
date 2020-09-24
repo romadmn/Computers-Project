@@ -10,11 +10,16 @@ namespace ComputersApp.Domain
 {
     public interface IRepository<TEntity> where TEntity : IEntityBase
     {
-        IQueryable<TEntity> GetAll();
-        Task<TEntity> FindByCondition(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FindById(int id);
+        IEnumerable<TEntity> Find(ISpecification<TEntity> specification = null);
         Task Add(TEntity entity);
+        Task AddRange(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
+        void RemoveRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
-        Task<int> SaveChangesAsync();
+        bool Contains(ISpecification<TEntity> specification = null);
+        bool Contains(Expression<Func<TEntity, bool>> predicate);
+        int Count(ISpecification<TEntity> specification = null);
+        int Count(Expression<Func<TEntity, bool>> predicate);
     }
 }

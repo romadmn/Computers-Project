@@ -1,0 +1,78 @@
+<section class="backdrop">
+
+  <form
+    [formGroup]="editComputerForm"
+    #ngForm="ngForm"
+    (ngSubmit)="onSubmit()"
+    class="form-popup text-center border border-light p-5"
+  >
+    <p class="h2 mb-4 title">Edit computer</p>
+      <div class="form-row mb-4">
+        <div class="col-6">
+          <p class="input-label">Name:<span class="asterisk"> *</span></p>
+        </div>
+        <div class="col-4">
+          <input
+            formControlName="name"
+            type="text"
+            class="form-control"
+            maxlength="50"
+          />
+        </div>
+      </div>
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <p class="input-label">SSD Amount:<span class="asterisk"> *</span></p>
+      </div>
+      <div class="col-4">
+        <input
+          formControlName="ssdAmount"
+          type="text"
+          class="form-control"
+          maxlength="1000"
+        />
+      </div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <p class="input-label">RAM Amount:<span class="asterisk"> *</span></p>
+      </div>
+      <div class="col-4">
+        <input
+          formControlName="ramAmount"
+          type="text"
+          class="form-control"
+          maxlength="1000"
+        />
+      </div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <p class="input-label">OS Type:<span class="asterisk"> *</span></p>
+      </div>
+      <div class="col-4">
+        <select formControlName="osType" class="custom-select">
+          <option [ngValue]="0">Windows</option>
+          <option [ngValue]="1">Linux</option>
+          <option [ngValue]="2">Mac</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <p class="input-label">CPU:<span class="asterisk"> *</span></p>
+      </div>
+      <div class="col-4">
+        <select formControlName="cpu" class="custom-select">
+          <option *ngFor="let cpu of cpus; let key = index" [ngValue]="cpu.id">{{cpu.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn btn-info" type="submit" name="submit">
+      Save
+    </button>
+    <input type="button" class="btn" (click)="cancel()" value="Cancel" />
+  </form>
+</section>

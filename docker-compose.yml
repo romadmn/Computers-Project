@@ -10,13 +10,15 @@ services:
     ports:
       - "1433:1433"
   computersapp:
-    image: ${DOCKER_REGISTRY-}computersapiapp
+    image: ${DOCKER_REGISTRY-}aspnetcoreapp
     build:
       context: .
       dockerfile: ComputersApp.Api/Dockerfile
+      args:
+        - skip_client_build=false
 
-  computersangularapp:
-    image: ${DOCKER_REGISTRY-}computersangularapp
+  computers.angular.app:
+    image: ${DOCKER_REGISTRY-}angularapp
     build:
       context: .
       dockerfile: ComputersApp.Api/ClientApp/Dockerfile

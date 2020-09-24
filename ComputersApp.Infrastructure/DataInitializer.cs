@@ -32,7 +32,7 @@ namespace ComputersApp.Infrastructure
                         Name = "Hp",
                         CpuId = 1,
                         OsType = OsType.Windows,
-                        RamAmout = 4000,
+                        RamAmount = 4000,
                         SsdAmount = 256
                     }
                 );

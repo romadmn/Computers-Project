@@ -3,9 +3,11 @@ using ComputersApp.Application.DataTransferObjects;
 using ComputersApp.Application.Services.Interfaces;
 using ComputersApp.Domain;
 using ComputersApp.Domain.Entities;
+using ComputersApp.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,41 +15,41 @@ namespace ComputersApp.Application.Services.Implementation
 {
     public class ComputerService : IComputerService
     {
-        private readonly IRepository<Computer> _computerRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public ComputerService(IRepository<Computer> computerRepository, IMapper mapper)
+        public ComputerService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _computerRepository = computerRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<ComputerDto> GetById(int computerId)
         {
-            return _mapper.Map<ComputerDto>(await _computerRepository.GetAll().Include(p => p.Cpu).FirstOrDefaultAsync(p => p.Id == computerId));
+            return _mapper.Map<ComputerDto>(_unitOfWork.Repository<Computer>().Find(new ComputersWithCpuSpecification(computerId)).SingleOrDefault());
         }
 
         public async Task<List<ComputerDto>> GetAll()
         {
-            return _mapper.Map<List<ComputerDto>>(await _computerRepository.GetAll().Include(x=>x.Cpu).ToListAsync());
+            return _mapper.Map<List<ComputerDto>>(_unitOfWork.Repository<Computer>().Find(new ComputersWithCpuSpecification()).ToList());
         }
 
         public async Task<bool> Update(ComputerDto computerDto)
         {
             var computer = _mapper.Map<Computer>(computerDto);
-            _computerRepository.Update(computer);
-            var affectedRows = await _computerRepository.SaveChangesAsync();
+            _unitOfWork.Repository<Computer>().Update(computer);
+            var affectedRows = await _unitOfWork.SaveChangesAsync();
             return affectedRows > 0;
         }
 
         public async Task<bool> Remove(int computerId)
         {
-            var computer = await _computerRepository.FindByCondition(x=>x.Id == computerId);
+            var computer = await _unitOfWork.Repository<Computer>().FindById(computerId);
             if (computer == null)
             {
                 return false;
             }
-            _computerRepository.Remove(computer);
-            var affectedRows = await _computerRepository.SaveChangesAsync();
+            _unitOfWork.Repository<Computer>().Remove(computer);
+            var affectedRows = await _unitOfWork.SaveChangesAsync();
             return affectedRows > 0;
         }
 
@@ -55,8 +57,8 @@ namespace ComputersApp.Application.Services.Implementation
         {
             computerDto.Id = null;
             var computer = _mapper.Map<Computer>(computerDto);
-            await _computerRepository.Add(computer);
-            await _computerRepository.SaveChangesAsync();
+            await _unitOfWork.Repository<Computer>().Add(computer);
+            await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<ComputerDto>(computer);
         }
     }

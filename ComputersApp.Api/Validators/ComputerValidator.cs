@@ -15,7 +15,7 @@ namespace ComputersApp.Api.Validators
             RuleFor(x => x.Name)
                 .NotNull()
                 .Length(1, 50);
-            RuleFor(x => x.RamAmout)
+            RuleFor(x => x.RamAmount)
                 .NotNull();
             RuleFor(x => x.SsdAmount)
                 .NotNull();

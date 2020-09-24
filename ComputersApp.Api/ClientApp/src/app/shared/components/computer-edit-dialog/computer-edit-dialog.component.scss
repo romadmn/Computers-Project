@@ -1,0 +1,49 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 5;
+  }
+  
+  .form-popup{
+    position: fixed;
+    background: white;
+    top: 10%;
+    left: 15%;
+    width: 50%;
+  }
+  
+  form {
+    margin: 0% 10%;
+  }
+  .hide-input{
+    display: none;
+  }
+  
+  .additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+  
+  .title{
+    text-align: left;
+    font-size: 24pt;
+  }
+  
+  .input-label{
+    text-align: left;
+    font-size: 16pt;
+  }
+  
+  
+  .asterisk {
+    color: red;
+  }
+  
+  .close {
+    margin-left: 5px;
+  }
+  

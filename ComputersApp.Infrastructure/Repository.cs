@@ -1,5 +1,6 @@
 ﻿using ComputersApp.Domain;
 using ComputersApp.Domain.Entities;
+using ComputersApp.Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,19 +22,43 @@ namespace ComputersApp.Infrastructure
             Entity = context.Set<TEntity>();
         }
 
-        public virtual IQueryable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> Find(ISpecification<TEntity> specification = null)
         {
-            return Entity.AsQueryable();
+            return ApplySpecification(specification);
         }
 
-        public virtual async Task<TEntity> FindByCondition(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntity> FindById(int id)
         {
-            return await Entity.FirstOrDefaultAsync(predicate);
+            return await Entity.FindAsync(id);
         }
 
         public virtual async Task Add(TEntity entity)
         {
             await Entity.AddAsync(entity);
+        }
+        public virtual async Task AddRange(IEnumerable<TEntity> entities)
+        {
+            await Entity.AddRangeAsync(entities);
+        }
+
+        public virtual bool Contains(ISpecification<TEntity> specification = null)
+        {
+            return Count(specification) > 0 ? true : false;
+        }
+
+        public virtual bool Contains(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Count(predicate) > 0 ? true : false;
+        }
+
+        public virtual int Count(ISpecification<TEntity> specification = null)
+        {
+            return ApplySpecification(specification).Count();
+        }
+
+        public virtual int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Entity.Where(predicate).Count();
         }
 
         public virtual void Remove(TEntity entity)
@@ -41,17 +66,21 @@ namespace ComputersApp.Infrastructure
             Entity.Remove(entity);
         }
 
-        public virtual void Update(TEntity entity)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            Entity.Update(entity);
+            Entity.RemoveRange(entities);
         }
 
-        public async Task<int> SaveChangesAsync()
+        public virtual void Update(TEntity entity)
         {
-            lock (Context)
-            {
-                return Context.SaveChangesAsync().Result;
-            }
+            Entity.Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
         }
+
+        private IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> spec)
+        {
+            return SpecificationEvaluator<TEntity>.GetQuery(Entity.AsQueryable(), spec);
+        }
+
     }
 }

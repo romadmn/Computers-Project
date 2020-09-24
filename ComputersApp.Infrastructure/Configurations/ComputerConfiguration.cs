@@ -19,7 +19,7 @@ namespace ComputersApp.Infrastructure.Configurations
             builder.Property(x => x.Name)
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.Property(x => x.RamAmout)
+            builder.Property(x => x.RamAmount)
                 .IsRequired();
             builder.Property(x => x.SsdAmount)
                 .IsRequired();

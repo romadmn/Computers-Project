@@ -1,0 +1,49 @@
+<ng-template appRef></ng-template>
+<div class="container my-4">
+  <button class="btn btn-primary btn-sm rounded" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="addNewComputer()"><i>Add new computer</i></button>
+  <br/>
+
+  <ng-template [ngIf]="computers?.length==0" [ngIfElse]="computersExist">
+    <div class="container my-5 py-5 z-depth-1">
+
+      <section class="text-center px-md-5 mx-md-5 dark-grey-text">
+        <h3 class="font-weight-bold">No computers found.</h3>
+      </section>
+
+    </div>
+  </ng-template>
+
+
+  <ng-template #computersExist>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">SSD</th>
+          <th scope="col">RAM</th>
+          <th scope="col">CPU</th>
+          <th scope="col">OS</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let computer of computers; let key = index">
+          <td>{{computer.name}}</td>
+          <td>{{computer.ssdAmount}}</td>
+          <td>{{computer.ramAmount}}</td>
+          <td>{{computer.cpu.name}}</td>
+          <td [ngSwitch]="computer.osType">
+            <ng-template ngSwitchCase="0">Windows</ng-template>
+            <ng-template ngSwitchCase="1">Linux</ng-template>
+            <ng-template ngSwitchDefault="2">Mac</ng-template>
+          </td>
+          <td><button class="btn btn-primary btn-sm rounded" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="showEditForm(computer)"><i>Edit</i></button></td>
+          <td><button class="btn btn-danger btn-sm rounded" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteComputer(computer.id)"><i>Delete</i></button></td>
+        </tr>
+      </tbody>
+    </table>
+    <br/>
+    </ng-template>
+
+</div>
