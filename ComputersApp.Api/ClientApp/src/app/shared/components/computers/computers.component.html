@@ -1,7 +1,6 @@
 <ng-template appRef></ng-template>
 <div class="container my-4">
-  <button class="btn btn-primary btn-sm rounded" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="addNewComputer()"><i>Add new computer</i></button>
-  <br/>
+  <button class="btn btn-primary new-pc" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="addNewComputer()"><i>Add new computer</i></button>
 
   <ng-template [ngIf]="computers?.length==0" [ngIfElse]="computersExist">
     <div class="container my-5 py-5 z-depth-1">
@@ -38,8 +37,8 @@
             <ng-template ngSwitchCase="1">Linux</ng-template>
             <ng-template ngSwitchDefault="2">Mac</ng-template>
           </td>
-          <td><button class="btn btn-primary btn-sm rounded" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="showEditForm(computer)"><i>Edit</i></button></td>
-          <td><button class="btn btn-danger btn-sm rounded" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteComputer(computer.id)"><i>Delete</i></button></td>
+          <td><button class="btn btn-primary" type="button" data-toggle="tooltip" data-placement="top" title="Add" (click)="showEditForm(computer)"><i>Edit</i></button></td>
+          <td><button class="btn btn-danger" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteComputer(computer.id)"><i>Delete</i></button></td>
         </tr>
       </tbody>
     </table>

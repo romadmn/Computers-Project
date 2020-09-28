@@ -11,7 +11,8 @@ namespace ComputersApp.Application.MapperProfilers
     {
         public CpuProfiler()
         {
-            CreateMap<CpuDto, Cpu>().ReverseMap();
+            CreateMap<CpuDto, Cpu>();
+            CreateMap<Cpu, CpuDto>();
         }
     }
 }

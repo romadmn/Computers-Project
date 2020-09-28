@@ -21,9 +21,9 @@ namespace ComputersApp.Api.Controllers
 
         // GET: api/Computer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CpuDto>> Get([FromRoute] int id)
+        public async Task<ActionResult<CpuDto>> GetAsync([FromRoute] int id)
         {
-            var computer = await _cpuService.GetById(id);
+            var computer = await _cpuService.GetByIdAsync(id);
             if (computer == null)
             {
                 return NotFound();
@@ -33,21 +33,21 @@ namespace ComputersApp.Api.Controllers
 
         // GET: api/Computer
         [HttpGet]
-        public async Task<ActionResult<List<CpuDto>>> GetAll()
+        public async Task<ActionResult<List<CpuDto>>> GetAllAsync()
         {
-            var computers = await _cpuService.GetAll();
+            var computers = await _cpuService.GetAllAsync();
             if (computers == null)
             {
                 return NotFound();
             }
-            return computers;
+            return Ok(computers);
         }
 
         // PUT: api/Computer
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] CpuDto computerDto)
+        public async Task<IActionResult> PutAsync([FromBody] CpuDto computerDto)
         {
-            var updated = await _cpuService.Update(computerDto);
+            var updated = await _cpuService.UpdateAsync(computerDto);
             if (!updated)
             {
                 return NotFound();
@@ -57,17 +57,17 @@ namespace ComputersApp.Api.Controllers
 
         // POST: api/Computer
         [HttpPost]
-        public async Task<ActionResult<CpuDto>> Post([FromBody] CpuDto computerDto)
+        public async Task<ActionResult<CpuDto>> PostAsync([FromBody] CpuDto computerDto)
         {
-            var computer = await _cpuService.Add(computerDto);
+            var computer = await _cpuService.AddAsync(computerDto);
             return CreatedAtAction("Get", new { id = computer.Id }, computer);
         }
 
         // DELETE: api/Computer/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            var deleted = await _cpuService.Remove(id);
+            var deleted = await _cpuService.RemoveAsync(id);
             if (!deleted)
             {
                 return NotFound();

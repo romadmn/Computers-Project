@@ -22,13 +22,13 @@ export class ComputerAddDialogComponent implements OnInit {
   ngOnInit(): void {
     this.addComputerForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      ssdAmount: new FormControl(0, Validators.required),
-      ramAmount: new FormControl(0, Validators.required),
+      ssdAmount: new FormControl('', Validators.required),
+      ramAmount: new FormControl('', Validators.required),
       osType: new FormControl(<number>OsType.Linux),
       cpu: new FormControl(null)
     });
     this.cpuService.getAll().subscribe((data: ICpu[]) => {
-      this.cpus = data
+      this.cpus = data;
     });
   }
 
@@ -38,9 +38,8 @@ export class ComputerAddDialogComponent implements OnInit {
       ramAmount: this.addComputerForm.get('ramAmount').value,
       ssdAmount: this.addComputerForm.get('ssdAmount').value,
       osType: this.addComputerForm.get('osType').value,
-      cpu: this.cpus.find(x=>x.id == this.addComputerForm.get('cpu').value),
+      cpuId: this.addComputerForm.get('cpu').value
     };
-    newComputer.cpu.id = 0;
     this.computerService.post(newComputer).subscribe(() => {
       this.onCancel.emit();
     });

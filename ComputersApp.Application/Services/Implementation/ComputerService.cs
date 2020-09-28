@@ -23,17 +23,17 @@ namespace ComputersApp.Application.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<ComputerDto> GetById(int computerId)
+        public async Task<ComputerDto> GetByIdAsync(int computerId)
         {
-            return _mapper.Map<ComputerDto>(_unitOfWork.Repository<Computer>().Find(new ComputersWithCpuSpecification(computerId)).SingleOrDefault());
+            return _mapper.Map<ComputerDto>(_unitOfWork.Repository<Computer>().Find(new ComputersWithCpuSpecification(computerId)).FirstOrDefault());
         }
 
-        public async Task<List<ComputerDto>> GetAll()
+        public async Task<List<ComputerDto>> GetAllAsync()
         {
             return _mapper.Map<List<ComputerDto>>(_unitOfWork.Repository<Computer>().Find(new ComputersWithCpuSpecification()).ToList());
         }
 
-        public async Task<bool> Update(ComputerDto computerDto)
+        public async Task<bool> UpdateAsync(ComputerDto computerDto)
         {
             var computer = _mapper.Map<Computer>(computerDto);
             _unitOfWork.Repository<Computer>().Update(computer);
@@ -41,7 +41,7 @@ namespace ComputersApp.Application.Services.Implementation
             return affectedRows > 0;
         }
 
-        public async Task<bool> Remove(int computerId)
+        public async Task<bool> RemoveAsync(int computerId)
         {
             var computer = await _unitOfWork.Repository<Computer>().FindById(computerId);
             if (computer == null)
@@ -53,7 +53,7 @@ namespace ComputersApp.Application.Services.Implementation
             return affectedRows > 0;
         }
 
-        public async Task<ComputerDto> Add(ComputerDto computerDto)
+        public async Task<ComputerDto> AddAsync(ComputerDto computerDto)
         {
             computerDto.Id = null;
             var computer = _mapper.Map<Computer>(computerDto);

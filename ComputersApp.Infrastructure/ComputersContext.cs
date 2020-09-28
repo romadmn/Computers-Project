@@ -11,6 +11,7 @@ namespace ComputersApp.Infrastructure
     {
         public DbSet<Computer> Computer { get; set; }
         public DbSet<Cpu> Cpu { get; set; }
+        public DbSet<User> User { get; set; }
 
         public ComputersContext(DbContextOptions<ComputersContext> options) : base(options)
         {
@@ -24,6 +25,7 @@ namespace ComputersApp.Infrastructure
 
             modelBuilder.ApplyConfiguration(new ComputerConfiguration());
             modelBuilder.ApplyConfiguration(new CpuConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
 
         }
     }

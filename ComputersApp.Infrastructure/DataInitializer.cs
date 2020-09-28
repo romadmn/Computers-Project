@@ -12,6 +12,18 @@ namespace ComputersApp.Infrastructure
     {
         public static void Initialize(ComputersContext context)
         {
+            if (!context.User.Any())
+            {
+                context.User.AddRange(
+                    new User
+                    {
+                        Email = "ferencrman@gmail.com",
+                        Password = "password",
+                        Role = "Admin"
+                    }
+                );
+                context.SaveChanges();
+            }
             if (!context.Cpu.Any())
             {
                 context.Cpu.AddRange(

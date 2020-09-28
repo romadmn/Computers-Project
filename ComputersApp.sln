@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputersApp.Api", "ComputersApp.Api\ComputersApp.Api.csproj", "{EA657B8D-D41C-49CD-BF3B-51F7AA1A4197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputersApp.Api", "ComputersApp.Api\ComputersApp.Api.csproj", "{EA657B8D-D41C-49CD-BF3B-51F7AA1A4197}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E} = {AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}
 		{4C121E6A-0301-408A-BF5A-0EA366744118} = {4C121E6A-0301-408A-BF5A-0EA366744118}
@@ -20,9 +20,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputersApp.Application", 
 		{4C121E6A-0301-408A-BF5A-0EA366744118} = {4C121E6A-0301-408A-BF5A-0EA366744118}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputersApp.Infrastructure", "ComputersApp.Infrastructure\ComputersApp.Infrastructure.csproj", "{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputersApp.Infrastructure", "ComputersApp.Infrastructure\ComputersApp.Infrastructure.csproj", "{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4C121E6A-0301-408A-BF5A-0EA366744118} = {4C121E6A-0301-408A-BF5A-0EA366744118}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputersApp.Tests", "ComputersApp.Tests\ComputersApp.Tests.csproj", "{4723E46B-6B0E-4C4B-AAB3-ADB690204275}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E} = {AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}
+		{4C121E6A-0301-408A-BF5A-0EA366744118} = {4C121E6A-0301-408A-BF5A-0EA366744118}
+		{EA657B8D-D41C-49CD-BF3B-51F7AA1A4197} = {EA657B8D-D41C-49CD-BF3B-51F7AA1A4197}
+		{4D685898-63E0-4930-A2DD-1A595E54FD34} = {4D685898-63E0-4930-A2DD-1A595E54FD34}
 	EndProjectSection
 EndProject
 Global
@@ -51,6 +59,10 @@ Global
 		{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

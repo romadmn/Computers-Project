@@ -21,17 +21,17 @@ namespace ComputersApp.Application.Services.Implementation
             _mapper = mapper;
         }
 
-        public async Task<CpuDto> GetById(int cpuId)
+        public async Task<CpuDto> GetByIdAsync(int cpuId)
         {
-            return _mapper.Map<CpuDto>(_unitOfWork.Repository<Cpu>().FindById(cpuId));
+            return _mapper.Map<CpuDto>(await _unitOfWork.Repository<Cpu>().FindById(cpuId));
         }
 
-        public async Task<List<CpuDto>> GetAll()
+        public async Task<List<CpuDto>> GetAllAsync()
         {
             return _mapper.Map<List<CpuDto>>(_unitOfWork.Repository<Cpu>().Find().ToList());
         }
 
-        public async Task<bool> Update(CpuDto cpuDto)
+        public async Task<bool> UpdateAsync(CpuDto cpuDto)
         {
             var cpu = _mapper.Map<Cpu>(cpuDto);
             _unitOfWork.Repository<Cpu>().Update(cpu);
@@ -39,7 +39,7 @@ namespace ComputersApp.Application.Services.Implementation
             return affectedRows > 0;
         }
 
-        public async Task<bool> Remove(int cpuId)
+        public async Task<bool> RemoveAsync(int cpuId)
         {
             var cpu = await _unitOfWork.Repository<Cpu>().FindById(cpuId);
             if (cpu == null)
@@ -51,7 +51,7 @@ namespace ComputersApp.Application.Services.Implementation
             return affectedRows > 0;
         }
 
-        public async Task<CpuDto> Add(CpuDto cpuDto)
+        public async Task<CpuDto> AddAsync(CpuDto cpuDto)
         {
             cpuDto.Id = null;
             var cpu = _mapper.Map<Cpu>(cpuDto);

@@ -11,7 +11,8 @@ namespace ComputersApp.Application.MapperProfilers
     {
         public ComputerProfiler()
         {
-            CreateMap<ComputerDto, Computer>().ReverseMap();
+            CreateMap<ComputerDto, Computer>();
+            CreateMap<Computer, ComputerDto>();
         }
     }
 }

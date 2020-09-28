@@ -1,3 +1,4 @@
 <nav class="navbar navbar-light bg-light">
   <span class="navbar-brand mb-0 h1">Computers list</span>
+  <a *ngIf="currentUser" class="nav-item nav-link btn btn-light" (click)="logout()">Logout</a>
 </nav>

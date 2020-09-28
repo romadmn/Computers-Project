@@ -8,10 +8,10 @@ namespace ComputersApp.Application.Services.Interfaces
 {
     public interface ICpuService
     {
-        Task<CpuDto> GetById(int cpuId);
-        Task<List<CpuDto>> GetAll();
-        Task<bool> Update(CpuDto cpu);
-        Task<bool> Remove(int cpuId);
-        Task<CpuDto> Add(CpuDto cpu);
+        Task<CpuDto> GetByIdAsync(int cpuId);
+        Task<List<CpuDto>> GetAllAsync();
+        Task<bool> UpdateAsync(CpuDto cpu);
+        Task<bool> RemoveAsync(int cpuId);
+        Task<CpuDto> AddAsync(CpuDto cpu);
     }
 }

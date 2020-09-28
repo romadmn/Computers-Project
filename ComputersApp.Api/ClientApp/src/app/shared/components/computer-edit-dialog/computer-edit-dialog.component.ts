@@ -34,15 +34,13 @@ export class ComputerEditDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.editComputerForm.get('cpu').value)
-    console.log(this.cpus.find(x=>x.id == this.editComputerForm.get('cpu').value))
     const newComputer: IComputer = {
       id: this.computer.id,
       name: this.editComputerForm.get('name').value,
       ramAmount: this.editComputerForm.get('ramAmount').value,
       ssdAmount: this.editComputerForm.get('ssdAmount').value,
       osType: this.editComputerForm.get('osType').value,
-      cpu: this.cpus.find(x=>x.id == this.editComputerForm.get('cpu').value),
+      cpuId: this.editComputerForm.get('cpu').value
     };
     this.computerService.put(newComputer).subscribe(() => {
       this.onCancel.emit();

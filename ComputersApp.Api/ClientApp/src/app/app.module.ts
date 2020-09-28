@@ -10,6 +10,10 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { RefDirective } from './shared/directives/ref.directive';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { LoginComponent } from './shared/components/login/login.component';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { AuthGuard } from './core/guards/auth.guard';
 
 
 @NgModule({
@@ -19,6 +23,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     ComputerEditDialogComponent,
     ComputerAddDialogComponent,
     NavbarComponent,
+    LoginComponent,
     RefDirective
   ],
   imports: [
@@ -27,10 +32,15 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: ComputersComponent }
+      { path: '', component: ComputersComponent, canActivate: [AuthGuard] },
+      { path: 'login', component: LoginComponent },
+      { path: '**', redirectTo: '', canActivate: [AuthGuard] }
     ])
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+],
   entryComponents: [ComputerEditDialogComponent, ComputerAddDialogComponent],
   bootstrap: [AppComponent]
 })
