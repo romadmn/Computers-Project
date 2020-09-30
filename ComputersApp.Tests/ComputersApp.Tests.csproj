@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ComputersApp\ComputersApp.Api\ComputersApp.Api.csproj" />
-    <ProjectReference Include="..\ComputersApp\ComputersApp.Application\ComputersApp.Application.csproj" />
+    <ProjectReference Include="..\ComputersApp.Api\ComputersApp.Api.csproj" />
+    <ProjectReference Include="..\ComputersApp.Application\ComputersApp.Application.csproj" />
   </ItemGroup>
 
 </Project>

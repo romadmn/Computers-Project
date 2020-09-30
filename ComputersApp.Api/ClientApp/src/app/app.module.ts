@@ -39,7 +39,6 @@ import { AuthGuard } from './core/guards/auth.guard';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
 ],
   entryComponents: [ComputerEditDialogComponent, ComputerAddDialogComponent],
   bootstrap: [AppComponent]

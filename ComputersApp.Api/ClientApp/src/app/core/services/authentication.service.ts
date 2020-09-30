@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { IUser } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
@@ -21,12 +21,27 @@ export class AuthenticationService {
     login(email: string, password: string) {
         return this.http.post<IUser>('/api/User/authenticate', { email: email, password: password })
             .pipe(map(user => {
-                console.log(user)
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
             }));
     }
+
+    refreshToken(): Observable<IUser> {
+      const accessToken = this.currentUserValue.token.jwt;
+      const refreshToken = this.currentUserValue.token.refreshToken;
+      return this.http.post<IUser>(
+        '/api/User/refresh',
+       {
+        jwt: accessToken,
+        refreshToken: refreshToken
+       }).pipe(
+        tap(response => {
+          localStorage.setItem('currentUser', JSON.stringify(response));
+          this.currentUserSubject.next(response);
+        })
+      );
+     }
 
     logout() {
         localStorage.removeItem('currentUser');

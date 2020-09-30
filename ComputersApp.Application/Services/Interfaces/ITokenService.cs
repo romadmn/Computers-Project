@@ -10,7 +10,9 @@ namespace ComputersApp.Application.Services.Interfaces
 {
     public interface ITokenService
     {
-        Task<User> VerifyUserCredentialsAsync(LoginDto loginDto);
-        string GenerateJWT(IEnumerable<Claim> claims);
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
+        public User VerifyUserCredentialsAsync(LoginDto loginDto);
+        string GenerateAccessToken(User user);
+        string GenerateRefreshToken();
     }
 }

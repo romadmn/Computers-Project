@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Authentication;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace ComputersApp.Application.Services.Implementation
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<User> VerifyUserCredentialsAsync(LoginDto loginDto)
+        public User VerifyUserCredentialsAsync(LoginDto loginDto)
         {
             var user = _unitOfWork.Repository<User>().Find(new LoginSpecification(loginDto.Email, loginDto.Password)).SingleOrDefault();
 
@@ -38,19 +39,54 @@ namespace ComputersApp.Application.Services.Implementation
             return user;
         }
 
-        public string GenerateJWT(IEnumerable<Claim> claims)
+        public string GenerateAccessToken(User user)
         {
             SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             SigningCredentials credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim("id",user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email,user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Issuer"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(100),
+                expires: DateTime.UtcNow.AddMinutes(1),
                 signingCredentials: credentials);
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodedToken;
+        }
+        
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
+        }
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false, 
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])),
+                ValidateLifetime = false 
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                throw new SecurityTokenException("Invalid token");
+            return principal;
         }
     }
 }
