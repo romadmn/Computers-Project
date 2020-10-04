@@ -53,7 +53,7 @@ namespace ComputersApp.Api.Controllers
 
         [HttpPost]
         [Route("refresh")]
-        public async Task<ActionResult<UserTokenDto>> Refresh(TokenDto tokenDto)
+        public async Task<ActionResult<UserTokenDto>> RefreshAsync(TokenDto tokenDto)
         {
             if (tokenDto is null)
             {
@@ -62,7 +62,8 @@ namespace ComputersApp.Api.Controllers
             string accessToken = tokenDto.JWT;
             string refreshToken = tokenDto.RefreshToken;
             var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
-            var userId = int.Parse(principal.FindFirst("id")?.Value);
+            int userId;
+            int.TryParse(principal.FindFirst("id")?.Value, out userId);
             var user = await _userService.GetByIdAsync(userId);
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
             {
@@ -81,10 +82,11 @@ namespace ComputersApp.Api.Controllers
         }
         [HttpPost]
         [Route("revoke")]
-        public async Task<IActionResult> Revoke(string token)
+        public async Task<IActionResult> RevokeAsync(string token)
         {
             var principal = _tokenService.GetPrincipalFromExpiredToken(token);
-            var userId = int.Parse(principal.FindFirst("id")?.Value);
+            int userId;
+            int.TryParse(principal.FindFirst("id")?.Value, out userId);
             var user = await _userService.GetByIdAsync(userId);
             if (user == null) return BadRequest();
             user.RefreshToken = null;

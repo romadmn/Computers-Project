@@ -35,7 +35,7 @@ export class JwtInterceptor implements HttpInterceptor {
               if (err instanceof HttpErrorResponse && err.status === 403) {
                 return this.logoutAndRedirect(err);
               }
-              return throwError(err);
+              return throwError(err.message);
             })
           );
     }

@@ -1,26 +1,6 @@
 version: '3.4'
 
 services:
-  ms-sql-server: 
-    image: "mcr.microsoft.com/mssql/server:2019-latest"
-    environment:
-        ACCEPT_EULA: "Y"
-        SA_PASSWORD: "MyPassword111"
-        MSSQL_PID: Express 
-    ports:
-      - "1433:1433"
-
-  computersapp:
-    image: ${DOCKER_REGISTRY-}aspnetcoreapp
-    build:
-      context: .
-      dockerfile: ComputersApp.Api/Dockerfile
-      args:
-        - skip_client_build=false
-    ports:
-      - "32770:32770"
-    depends_on:
-        - ms-sql-server
 
   computers.angular.app:
     image: ${DOCKER_REGISTRY-}angularapp
@@ -31,3 +11,20 @@ services:
       - "4200:4200" 
     volumes:
       - ./ComputersApp.Api/ClientApp:/app
+
+  computersapp:
+    image: ${DOCKER_REGISTRY-}aspnetcoreapp
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"  
+    build:
+      context: .
+      dockerfile: ComputersApp.Api/Dockerfile
+      args:
+        - skip_client_build=false
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro  

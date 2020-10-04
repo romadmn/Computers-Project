@@ -12,7 +12,6 @@ import { RefDirective } from './shared/directives/ref.directive';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { AuthGuard } from './core/guards/auth.guard';
 
 

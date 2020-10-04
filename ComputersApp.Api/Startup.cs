@@ -36,10 +36,11 @@ namespace ComputersApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = new StringBuilder(Configuration["DOCKER_CONNECTION_STRING"]);
+            connectionString = connectionString.Replace("ENVPW", Configuration["DB_PW"]);
 
             services.AddDbContext<ComputersContext>(options =>
-                options.UseSqlServer(connectionString, x => x.MigrationsAssembly("ComputersApp.Api")));
+                options.UseSqlServer(connectionString.ToString(), x => x.MigrationsAssembly("ComputersApp.Api")));
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new ComputerProfiler());
@@ -102,15 +103,15 @@ namespace ComputersApp
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //    app.UseHsts();
+            //}
 
             app.UseStaticFiles(new StaticFileOptions()
             {

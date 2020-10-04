@@ -2,7 +2,6 @@
 
   <form
     [formGroup]="editComputerForm"
-    #ngForm="ngForm"
     (ngSubmit)="onSubmit()"
     class="form-popup text-center border border-light p-5"
   >
@@ -17,7 +16,11 @@
             type="text"
             class="form-control"
             maxlength="50"
-          />
+            [ngClass]="{ 'is-invalid': submitted && form.name.errors }"/>
+          <div *ngIf="submitted && form.name.errors" class="invalid-feedback">
+            <div *ngIf="form.name.errors.required">Name is required</div>
+            <div *ngIf="form.name.errors.maxlength">Name must be less than 50 characters</div>
+          </div>
         </div>
       </div>
     <div class="form-row mb-4">
@@ -30,7 +33,10 @@
           type="text"
           class="form-control"
           maxlength="1000"
-        />
+          [ngClass]="{ 'is-invalid': submitted && form.ssdAmount.errors }"/>
+        <div *ngIf="submitted && form.ssdAmount.errors" class="invalid-feedback">
+          <div *ngIf="form.ssdAmount.errors.required">SSD Amount is required</div>
+        </div>
       </div>
     </div>
     <div class="form-row mb-4">
@@ -43,7 +49,10 @@
           type="text"
           class="form-control"
           maxlength="1000"
-        />
+          [ngClass]="{ 'is-invalid': submitted && form.ramAmount.errors }"/>
+        <div *ngIf="submitted && form.ramAmount.errors" class="invalid-feedback">
+          <div *ngIf="form.ramAmount.errors.required">RAM Amount is required</div>
+        </div>
       </div>
     </div>
     <div class="form-row mb-4">
@@ -51,17 +60,20 @@
         <p class="input-label">OS Type:<span class="asterisk"> *</span></p>
       </div>
       <div class="col-4">
-        <select formControlName="osType" class="custom-select">
+        <select formControlName="osType" class="custom-select" [ngClass]="{ 'is-invalid': submitted && form.osType.errors }">
           <option [ngValue]="0">Windows</option>
           <option [ngValue]="1">Linux</option>
           <option [ngValue]="2">Mac</option>
         </select>
+        <div *ngIf="submitted && form.osType.errors" class="invalid-feedback">
+          <div *ngIf="form.osType.errors.required">OS Type is required</div>
+        </div>
       </div>
     </div>
 
     <div class="form-row mb-4">
       <div class="col-6">
-        <p class="input-label">CPU:<span class="asterisk"> *</span></p>
+        <p class="input-label">CPU:</p>
       </div>
       <div class="col-4">
         <select formControlName="cpu" class="custom-select">

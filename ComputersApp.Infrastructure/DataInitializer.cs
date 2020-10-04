@@ -18,7 +18,7 @@ namespace ComputersApp.Infrastructure
                     new User
                     {
                         Email = "ferencrman@gmail.com",
-                        Password = "password",
+                        Password = "MyPassword111",
                         Role = "Admin"
                     }
                 );

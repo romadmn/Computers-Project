@@ -16,12 +16,14 @@ export class ComputerAddDialogComponent implements OnInit {
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
   addComputerForm: FormGroup;
   cpus: ICpu[];
+  submitted = false;
+  loading = false;
 
   constructor(private computerService: ComputerService, private cpuService: CpuService) { }
 
   ngOnInit(): void {
     this.addComputerForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       ssdAmount: new FormControl('', Validators.required),
       ramAmount: new FormControl('', Validators.required),
       osType: new FormControl(<number>OsType.Linux),
@@ -31,8 +33,16 @@ export class ComputerAddDialogComponent implements OnInit {
       this.cpus = data;
     });
   }
+  get form() { return this.addComputerForm.controls; }
 
   onSubmit() {
+    this.submitted = true;
+
+      if (this.addComputerForm.invalid) {
+          return;
+      }
+
+      this.loading = true;
     const newComputer: IComputer = {
       name: this.addComputerForm.get('name').value,
       ramAmount: this.addComputerForm.get('ramAmount').value,

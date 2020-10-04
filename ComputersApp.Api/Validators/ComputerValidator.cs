@@ -13,11 +13,14 @@ namespace ComputersApp.Api.Validators
         {
             RuleFor(x => x.Id).GreaterThanOrEqualTo(0);
             RuleFor(x => x.Name)
+                .NotEmpty()
                 .NotNull()
                 .Length(1, 50);
             RuleFor(x => x.RamAmount)
+                .NotEmpty()
                 .NotNull();
             RuleFor(x => x.SsdAmount)
+                .NotEmpty()
                 .NotNull();
         }
     }

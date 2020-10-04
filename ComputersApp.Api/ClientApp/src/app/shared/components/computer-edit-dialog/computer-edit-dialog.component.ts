@@ -17,23 +17,33 @@ export class ComputerEditDialogComponent implements OnInit {
   @Input() computer: IComputer;
   editComputerForm: FormGroup;
   cpus: ICpu[];
+  submitted = false;
+  loading = false;
 
   constructor(private computerService: ComputerService, private cpuService: CpuService ) { }
 
   ngOnInit(): void {
     this.editComputerForm = new FormGroup({
-      name: new FormControl(this.computer.name, Validators.required),
+      name: new FormControl(this.computer.name, [Validators.required, Validators.maxLength(50)]),
       ssdAmount: new FormControl(this.computer.ssdAmount, Validators.required),
       ramAmount: new FormControl(this.computer.ramAmount, Validators.required),
       osType: new FormControl(<number>this.computer.osType),
       cpu: new FormControl(this.computer.cpu.id)
     });
     this.cpuService.getAll().subscribe((data: ICpu[]) => {
-      this.cpus = data
+      this.cpus = data;
     });
   }
+  get form() { return this.editComputerForm.controls; }
 
   onSubmit() {
+    this.submitted = true;
+
+      if (this.editComputerForm.invalid) {
+          return;
+      }
+
+      this.loading = true;
     const newComputer: IComputer = {
       id: this.computer.id,
       name: this.editComputerForm.get('name').value,

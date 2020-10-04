@@ -1,13 +1,22 @@
 version: '3.4'
 
 services:
+  
+  ms.sql.server: 
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    volumes: 
+      - /var/opt/mssql:/app
+    environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_SA_PASSWORD: "${DB_PW}"
+    ports:
+      - "1433:1433"
+
   computersapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - DOCKER_CONNECTION_STRING=Server=ms.sql.server,1433;Initial Catalog=ComputersDbb1;User ID=SA;Password=ENVPW;
+      - DB_PW
+    depends_on:
+      - ms.sql.server
