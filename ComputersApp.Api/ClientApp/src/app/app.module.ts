@@ -1,3 +1,4 @@
+import { RegisterComponent } from './shared/components/register/register.component';
 import { ComputerAddDialogComponent } from './shared/components/computer-add-dialog/computer-add-dialog.component';
 import { ComputerEditDialogComponent } from './shared/components/computer-edit-dialog/computer-edit-dialog.component';
 import { ComputersComponent } from './shared/components/computers/computers.component';
@@ -21,6 +22,7 @@ import { AuthGuard } from './core/guards/auth.guard';
     ComputersComponent,
     ComputerEditDialogComponent,
     ComputerAddDialogComponent,
+    RegisterComponent,
     NavbarComponent,
     LoginComponent,
     RefDirective
@@ -39,7 +41,7 @@ import { AuthGuard } from './core/guards/auth.guard';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 ],
-  entryComponents: [ComputerEditDialogComponent, ComputerAddDialogComponent],
+  entryComponents: [ComputerEditDialogComponent, ComputerAddDialogComponent, RegisterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

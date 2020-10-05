@@ -82,9 +82,11 @@
       </div>
     </div>
 
-    <button class="btn btn-info" type="submit" name="submit">
+    <button [disabled]="loading" class="btn btn-primary" type="submit" name="submit">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
       Save
     </button>
     <input type="button" class="btn" (click)="cancel()" value="Cancel" />
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
   </form>
 </section>

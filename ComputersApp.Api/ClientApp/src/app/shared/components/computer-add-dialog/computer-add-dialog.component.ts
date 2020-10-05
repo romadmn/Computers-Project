@@ -18,6 +18,7 @@ export class ComputerAddDialogComponent implements OnInit {
   cpus: ICpu[];
   submitted = false;
   loading = false;
+  error = '';
 
   constructor(private computerService: ComputerService, private cpuService: CpuService) { }
 
@@ -52,7 +53,10 @@ export class ComputerAddDialogComponent implements OnInit {
     };
     this.computerService.post(newComputer).subscribe(() => {
       this.onCancel.emit();
-    });
+    }, error => {
+      this.error = error;
+      this.loading = false;
+  });
   }
 
   cancel() {

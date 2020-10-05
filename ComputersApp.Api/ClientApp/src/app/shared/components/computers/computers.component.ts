@@ -16,13 +16,6 @@ export class ComputersComponent implements OnInit {
   
   @ViewChild(RefDirective, {static: false}) refDir: RefDirective;
   computers: IComputer[];
-  addComputerForm: FormGroup = new FormGroup({
-    id: new FormControl(0),
-    name: new FormControl('', Validators.required),
-    ssdAmount: new FormControl('', Validators.required),
-    ramAmount: new FormControl('', Validators.required),
-    osType: new FormControl(<number>OsType.Linux),
-  });
 
   constructor(private computerService: ComputerService,
               private resolver: ComponentFactoryResolver) { }
@@ -39,14 +32,7 @@ export class ComputersComponent implements OnInit {
   showEditForm(computer: IComputer) {
     const formFactory = this.resolver.resolveComponentFactory(ComputerEditDialogComponent);
     const instance = this.refDir.containerRef.createComponent(formFactory).instance;
-    instance.computer = {
-      id: computer.id,
-      name: computer.name,
-      ramAmount: computer.ramAmount,
-      ssdAmount: computer.ssdAmount,
-      osType: computer.osType,
-      cpu: computer.cpu
-    };
+    instance.computer = computer;
     instance.onCancel.subscribe(() => {this.refDir.containerRef.clear(); this.ngOnInit(); });
   }
 

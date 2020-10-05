@@ -12,8 +12,15 @@
 **/*.dbmdl
 **/*.jfm
 **/azds.yaml
+**/.firebase
+**/.editorconfig
 **/bin
+**/e2e
+**/docs
+**/.gitignore
 **/charts
+**/*.zip
+**/*.md
 **/docker-compose*
 **/Dockerfile*
 **/node_modules

@@ -1,0 +1,73 @@
+<section class="backdrop">
+
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    class="form-popup text-center border border-light p-5"
+  >
+    <p class="h2 mb-4 title">Sign Up</p>
+      <div class="form-row mb-4">
+        <div class="col-6">
+          <p class="input-label">Email:<span class="asterisk"> *</span></p>
+        </div>
+        <div class="col-4">
+          <input
+            formControlName="email"
+            type="text"
+            class="form-control"
+            maxlength="50"
+            [ngClass]="{ 'is-invalid': submitted && form.email.errors }"/>
+          <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+            <div *ngIf="form.email.errors.required">Email is required</div>
+            <div *ngIf="form.email.errors.email">Please provide a valid email address</div>
+          </div>
+        </div>
+      </div>
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <p class="input-label">Password:<span class="asterisk"> *</span></p>
+      </div>
+      <div class="col-4">
+        <input
+          formControlName="password"
+          type="password"
+          class="form-control"
+          maxlength="1000"
+          [ngClass]="{ 'is-invalid': submitted && form.password.errors }"/>
+        <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+          <div *ngIf="form.password.errors.required">Password is required</div>
+          <div *ngIf="form.password.errors.minLength">Password length must be greater than 8 characters</div>
+          <div *ngIf="form.password.errors.minLength">Password length must be less than 16 characters</div>
+          <div *ngIf="form.password.errors.pattern">At least one lowercase char, uppercase char and one number</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row mb-4">
+      <div class="col-6">
+        <p class="input-label">Password confirm:<span class="asterisk"> *</span></p>
+      </div>
+      <div class="col-4">
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          class="form-control"
+          maxlength="1000"
+          [ngClass]="{ 'is-invalid': submitted && form.confirmPassword.errors }"/>
+        <div *ngIf="submitted && form.confirmPassword.errors" class="invalid-feedback">
+          <div *ngIf="form.confirmPassword.errors.required">Password confirm is required</div>
+          <div *ngIf="form.confirmPassword.errors.minLength">Password length must be greater than 8 characters</div>
+          <div *ngIf="form.confirmPassword.errors.minLength">Password length must be less than 16 characters</div>
+          <div *ngIf="form.confirmPassword.errors.pattern">At least one lowercase char, uppercase char and one number</div>
+          <div *ngIf="form.confirmPassword.errors.mustMatch">Password confirm does not match password</div>
+        </div>
+      </div>
+    </div>
+
+    <button [disabled]="loading" class="btn btn-primary" type="submit" name="submit">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Sign Up
+    </button>
+    <input type="button" class="btn" (click)="cancel()" value="Cancel" />
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+  </form>
+</section>

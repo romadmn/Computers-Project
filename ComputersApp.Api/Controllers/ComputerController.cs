@@ -33,7 +33,7 @@ namespace ComputersApp.Api.Controllers
         }
 
         // GET: api/Computer
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<ComputerDto>>> GetAllAsync()
         {

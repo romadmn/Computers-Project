@@ -45,6 +45,7 @@ namespace ComputersApp
             {
                 mc.AddProfile(new ComputerProfiler());
                 mc.AddProfile(new CpuProfiler());
+                mc.AddProfile(new UserProfiler());
             });
 
             IMapper mapper = mappingConfig.CreateMapper();

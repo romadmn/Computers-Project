@@ -8,6 +8,11 @@ namespace ComputersApp.Infrastructure.Specifications
 {
     public class LoginSpecification : BaseSpecification<User>
     {
+        public LoginSpecification(string email) : base(p => p.Email == email)
+        {
+
+        }
+
         public LoginSpecification(string email, string password) : base(p => p.Email == email && p.Password == password)
         {
 

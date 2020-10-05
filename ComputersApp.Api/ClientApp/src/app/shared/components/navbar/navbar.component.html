@@ -1,4 +1,17 @@
-<nav class="navbar navbar-light bg-light">
+<ng-template appRef></ng-template>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <span class="navbar-brand mb-0 h1">Computers list</span>
-  <a *ngIf="currentUser" class="nav-item nav-link btn btn-light" (click)="logout()">Logout</a>
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <ul class="navbar-nav ml-auto">
+        <li *ngIf="!currentUser" class="nav-item">
+            <a class="nav-item nav-link btn" (click)="signIn()">Sign In</a>
+        </li>
+        <li *ngIf="!currentUser" class="nav-item">
+            <a class="nav-item nav-link btn" (click)="showRegisterForm()">Sign Up</a>
+        </li>
+        <li *ngIf="currentUser" class="nav-item">
+          <a class="nav-item nav-link btn" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
 </nav>

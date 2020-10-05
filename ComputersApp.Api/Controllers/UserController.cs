@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using ComputersApp.Application.DataTransferObjects;
 using ComputersApp.Application.Services.Interfaces;
+using ComputersApp.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,30 @@ namespace ComputersApp.Api.Controllers
         {
             _tokenService = tokenService;
             _userService = userService;
+        }
+
+        // GET: api/Computer/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetAsync([FromRoute] int id)
+        {
+            var user = await _userService.GetByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+        // POST: api/user
+        [HttpPost]
+        public async Task<ActionResult<User>> PostAsync([FromBody] RegisterDto registerDto)
+        {
+            var user = await _userService.AddAsync(registerDto);
+            if(user == null)
+            {
+                return BadRequest("User with this email already exists!");
+            }
+            return CreatedAtAction("GetAsync", new { id = user.Id }, user);
         }
 
         [HttpPost("authenticate")]

@@ -19,6 +19,7 @@ export class ComputerEditDialogComponent implements OnInit {
   cpus: ICpu[];
   submitted = false;
   loading = false;
+  error = '';
 
   constructor(private computerService: ComputerService, private cpuService: CpuService ) { }
 
@@ -54,7 +55,10 @@ export class ComputerEditDialogComponent implements OnInit {
     };
     this.computerService.put(newComputer).subscribe(() => {
       this.onCancel.emit();
-    });
+    }, error => {
+      this.error = error;
+      this.loading = false;
+  });
   }
 
   cancel() {
