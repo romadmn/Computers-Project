@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IUser } from 'src/app/core/models/user';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { RefDirective } from '../../directives/ref.directive';
+import { LoginPopupComponent } from '../login-popup/login-popup.component';
 import { RegisterComponent } from '../register/register.component';
 
 @Component({
@@ -25,7 +26,9 @@ export class NavbarComponent implements OnInit {
   }
 
   signIn() {
-    this.router.navigate(['/login']);
+    const formFactory = this.resolver.resolveComponentFactory(LoginPopupComponent);
+    const instance = this.refDir.containerRef.createComponent(formFactory).instance;
+    instance.onCancel.subscribe(() => {this.refDir.containerRef.clear(); this.ngOnInit(); });
 }
 
   logout() {
@@ -36,7 +39,11 @@ export class NavbarComponent implements OnInit {
   showRegisterForm() {
     const formFactory = this.resolver.resolveComponentFactory(RegisterComponent);
     const instance = this.refDir.containerRef.createComponent(formFactory).instance;
-    instance.onCancel.subscribe(() => {this.refDir.containerRef.clear(); this.ngOnInit(); });
+    instance.onCancel.subscribe(() => {this.refDir.containerRef.clear();
+      if (this.authenticationService.currentUserValue) {
+        this.router.navigate(['/']);
+    }
+    });
   }
 
 }

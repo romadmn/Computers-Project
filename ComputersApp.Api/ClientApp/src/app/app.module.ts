@@ -1,3 +1,4 @@
+import { LoginPopupComponent } from './shared/components/login-popup/login-popup.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ComputerAddDialogComponent } from './shared/components/computer-add-dialog/computer-add-dialog.component';
 import { ComputerEditDialogComponent } from './shared/components/computer-edit-dialog/computer-edit-dialog.component';
@@ -22,6 +23,7 @@ import { AuthGuard } from './core/guards/auth.guard';
     ComputersComponent,
     ComputerEditDialogComponent,
     ComputerAddDialogComponent,
+    LoginPopupComponent,
     RegisterComponent,
     NavbarComponent,
     LoginComponent,
@@ -41,7 +43,8 @@ import { AuthGuard } from './core/guards/auth.guard';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 ],
-  entryComponents: [ComputerEditDialogComponent, ComputerAddDialogComponent, RegisterComponent],
+  entryComponents: [ComputerEditDialogComponent, ComputerAddDialogComponent,
+    RegisterComponent, LoginPopupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
