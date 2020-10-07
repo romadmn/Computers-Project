@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
+  isAdmin(){
+    return this.authenticationService.isAdmin();
+  }
+
   signIn() {
     const formFactory = this.resolver.resolveComponentFactory(LoginPopupComponent);
     const instance = this.refDir.containerRef.createComponent(formFactory).instance;

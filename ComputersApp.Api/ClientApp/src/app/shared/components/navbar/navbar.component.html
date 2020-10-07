@@ -1,6 +1,11 @@
 <ng-template appRef></ng-template>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <span class="navbar-brand mb-0 h1">Computers list</span>
+  <ul class="navbar-nav ml-auto w-100">
+        <li *ngIf="isAdmin()" class="nav-item">
+            <a class="nav-item nav-link btn" [routerLink]="['/admin']">Admin panel</a>
+        </li>
+    </ul>
   <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
     <ul class="navbar-nav ml-auto">
         <li *ngIf="!currentUser" class="nav-item">

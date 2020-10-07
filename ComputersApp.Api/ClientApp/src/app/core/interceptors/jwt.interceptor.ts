@@ -35,14 +35,16 @@ export class JwtInterceptor implements HttpInterceptor {
               if (err instanceof HttpErrorResponse && err.status === 403) {
                 return this.logoutAndRedirect(err);
               }
-              return throwError(err.message);
+              const error = err.error.message || err.statusText;
+              return throwError(error);
             })
           );
     }
     private logoutAndRedirect(err): Observable<HttpEvent<any>> {
         this.authenticationService.logout();
         this.router.navigateByUrl('/login');
-        return throwError(err);
+        const error = err.error.message || err.statusText;
+        return throwError(error);
     }
     private addAuthorizationHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
         if (token) {
