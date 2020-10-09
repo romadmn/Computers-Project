@@ -76,6 +76,7 @@ namespace ComputersApp
             services.AddScoped<ICpuService, CpuService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IServiceBusTopicSender,ServiceBusTopicSender>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin()

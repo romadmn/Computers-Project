@@ -25,13 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputersApp.Infrastructure
 		{4C121E6A-0301-408A-BF5A-0EA366744118} = {4C121E6A-0301-408A-BF5A-0EA366744118}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputersApp.Tests", "ComputersApp.Tests\ComputersApp.Tests.csproj", "{4723E46B-6B0E-4C4B-AAB3-ADB690204275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputersApp.Tests", "ComputersApp.Tests\ComputersApp.Tests.csproj", "{4723E46B-6B0E-4C4B-AAB3-ADB690204275}"
 	ProjectSection(ProjectDependencies) = postProject
 		{AFDFDC02-C9A9-4C49-87B7-CCE4969C196E} = {AFDFDC02-C9A9-4C49-87B7-CCE4969C196E}
 		{4C121E6A-0301-408A-BF5A-0EA366744118} = {4C121E6A-0301-408A-BF5A-0EA366744118}
 		{EA657B8D-D41C-49CD-BF3B-51F7AA1A4197} = {EA657B8D-D41C-49CD-BF3B-51F7AA1A4197}
 		{4D685898-63E0-4930-A2DD-1A595E54FD34} = {4D685898-63E0-4930-A2DD-1A595E54FD34}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputersApp.CosmoDb", "ComputersApp.CosmoDb\ComputersApp.CosmoDb.csproj", "{F97AEEDA-372D-4253-A706-C8C3879E2F20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4723E46B-6B0E-4C4B-AAB3-ADB690204275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97AEEDA-372D-4253-A706-C8C3879E2F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97AEEDA-372D-4253-A706-C8C3879E2F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97AEEDA-372D-4253-A706-C8C3879E2F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97AEEDA-372D-4253-A706-C8C3879E2F20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

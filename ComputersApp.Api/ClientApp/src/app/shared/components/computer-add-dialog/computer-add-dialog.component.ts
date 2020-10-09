@@ -59,6 +59,29 @@ export class ComputerAddDialogComponent implements OnInit {
   });
   }
 
+  addToCosmoDb() {
+    this.submitted = true;
+
+      if (this.addComputerForm.invalid) {
+          return;
+      }
+
+      this.loading = true;
+    const newComputer: IComputer = {
+      name: this.addComputerForm.get('name').value,
+      ramAmount: this.addComputerForm.get('ramAmount').value,
+      ssdAmount: this.addComputerForm.get('ssdAmount').value,
+      osType: this.addComputerForm.get('osType').value,
+      cpuId: this.addComputerForm.get('cpu').value
+    };
+    this.computerService.postToCosmoDb(newComputer).subscribe(() => {
+      this.onCancel.emit();
+    }, error => {
+      this.error = error;
+      this.loading = false;
+  });
+  }
+
   cancel() {
     this.onCancel.emit();
   }

@@ -85,6 +85,10 @@
       <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
       Add
     </button>
+    <button [disabled]="loading" class="btn btn-primary" (click)="addToCosmoDb()">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Add to CosmoDB(through Bus)
+    </button>
     <input type="button" class="btn" (click)="cancel()" value="Cancel" />
     <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
   </form>

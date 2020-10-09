@@ -15,9 +15,11 @@ namespace ComputersApp.Api.Controllers
     public class ComputerController : ControllerBase
     {
         private readonly IComputerService _computerService;
-        public ComputerController(IComputerService computerService)
+        private readonly IServiceBusTopicSender _serviceBusTopicSender;
+        public ComputerController(IComputerService computerService, IServiceBusTopicSender serviceBusTopicSender)
         {
             _computerService = computerService;
+            _serviceBusTopicSender = serviceBusTopicSender;
         }
 
         // GET: api/Computer/5
@@ -55,6 +57,18 @@ namespace ComputersApp.Api.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+
+        // POST: api/Computer
+        [HttpPost("bus")]
+        public async Task<ActionResult<ComputerDto>> PostToServiceBusAsync([FromBody] ComputerDto computerDto)
+        {
+            if(computerDto == null)
+            {
+                return BadRequest();
+            }
+            await _serviceBusTopicSender.SendMessage(computerDto);
+            return Ok(computerDto);
         }
 
         // POST: api/Computer

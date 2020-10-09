@@ -22,6 +22,10 @@ export class ComputerService {
     return this.http.post('/api/computer/', computer);
   }
 
+  postToCosmoDb(computer: IComputer) {
+    return this.http.post('/api/computer/bus/', computer);
+  }
+
   put(computer: IComputer) {
     return this.http.put('/api/computer/', computer);
   }
