@@ -10,7 +10,7 @@ namespace ComputersApp.Application.Services.Interfaces
     public interface IUserService
     {
         Task<User> GetByIdAsync(int userId);
-        Task<bool> UpdateAsync(User user);
+        Task UpdateAsync(User user);
         Task<User> AddAsync(RegisterDto registerDto);
     }
 }

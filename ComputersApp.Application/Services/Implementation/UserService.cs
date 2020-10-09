@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ComputersApp.Application.DataTransferObjects;
+using ComputersApp.Application.Exceptions;
 using ComputersApp.Application.Services.Interfaces;
 using ComputersApp.Domain;
 using ComputersApp.Domain.Entities;
@@ -24,27 +25,31 @@ namespace ComputersApp.Application.Services.Implementation
 
         public async Task<User> GetByIdAsync(int userId)
         {
-            return await _unitOfWork.Repository<User>().FindById(userId);
+            var user = await _unitOfWork.Repository<User>().FindById(userId);
+            if (user == null)
+                throw new NotFoundException($"User with id = {userId} not found!");
+            return user;
         }
 
-        public async Task<bool> UpdateAsync(User user)
+        public async Task UpdateAsync(User user)
         {
             _unitOfWork.Repository<User>().Update(user);
             var affectedRows = await _unitOfWork.SaveChangesAsync();
-            return affectedRows > 0;
+            if (affectedRows <= 0)
+                throw new BadRequestException($"User with id = {user.Id} was not updated!");
         }
 
         public async Task<User> AddAsync(RegisterDto registerDto)
         {
             var userWithTheSameEmail = _unitOfWork.Repository<User>().Find(new LoginSpecification(registerDto.Email)).SingleOrDefault();
             if (userWithTheSameEmail != null)
-            {
-                return null;
-            }
+                throw new NotFoundException($"User with Email = {registerDto.Email} already exist!");
             var newUser = _mapper.Map<User>(registerDto);
             await _unitOfWork.Repository<User>().Add(newUser);
             var affectedRows = await _unitOfWork.SaveChangesAsync();
-            return affectedRows > 0 ? newUser : null;
+            if (affectedRows <= 0)
+                throw new BadRequestException($"User was not registered!");
+            return newUser;
         }
     }
 }

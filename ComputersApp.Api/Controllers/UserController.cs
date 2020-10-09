@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ComputersApp.Application.DataTransferObjects;
+using ComputersApp.Application.Exceptions;
 using ComputersApp.Application.Services.Interfaces;
 using ComputersApp.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -31,10 +32,6 @@ namespace ComputersApp.Api.Controllers
         public async Task<ActionResult<User>> GetAsync([FromRoute] int id)
         {
             var user = await _userService.GetByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
             return Ok(user);
         }
 
@@ -43,25 +40,13 @@ namespace ComputersApp.Api.Controllers
         public async Task<ActionResult<User>> PostAsync([FromBody] RegisterDto registerDto)
         {
             var user = await _userService.AddAsync(registerDto);
-            if(user == null)
-            {
-                return BadRequest("User with this email already exists!");
-            }
             return CreatedAtAction("GetAsync", new { id = user.Id }, user);
         }
 
         [HttpPost("authenticate")]
         public async Task<ActionResult<UserTokenDto>> AuthenticateAsync([FromBody] LoginDto loginDto)
         {
-            if (loginDto == null)
-            {
-                return BadRequest("Invalid client request");
-            }
             var user = _tokenService.VerifyUserCredentialsAsync(loginDto);
-            if (user == null)
-            {
-                return Unauthorized();
-            }
             
             var accessToken = _tokenService.GenerateAccessToken(user);
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -80,10 +65,6 @@ namespace ComputersApp.Api.Controllers
         [Route("refresh")]
         public async Task<ActionResult<UserTokenDto>> RefreshAsync(TokenDto tokenDto)
         {
-            if (tokenDto is null)
-            {
-                return BadRequest("Invalid client request");
-            }
             string accessToken = tokenDto.JWT;
             string refreshToken = tokenDto.RefreshToken;
             var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
@@ -91,9 +72,7 @@ namespace ComputersApp.Api.Controllers
             int.TryParse(principal.FindFirst("id")?.Value, out userId);
             var user = await _userService.GetByIdAsync(userId);
             if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
-            {
-                return BadRequest("Invalid client request");
-            }
+                throw new BadRequestException("Invalid client request");
             var newAccessToken = _tokenService.GenerateAccessToken(user);
             var newRefreshToken = _tokenService.GenerateRefreshToken();
             user.RefreshToken = newRefreshToken;

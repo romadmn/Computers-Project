@@ -34,7 +34,7 @@ namespace ComputersApp.Application.Services.Implementation
         {
             var user = _unitOfWork.Repository<User>().Find(new LoginSpecification(loginDto.Email, loginDto.Password)).SingleOrDefault();
 
-            if (user == null) throw new InvalidCredentialException();
+            if (user == null) throw new InvalidCredentialException("Invalid credentials! Please try again!");
 
             return user;
         }
@@ -85,7 +85,7 @@ namespace ComputersApp.Application.Services.Implementation
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-                throw new SecurityTokenException("Invalid token");
+                throw new SecurityTokenException("Invalid token!");
             return principal;
         }
     }

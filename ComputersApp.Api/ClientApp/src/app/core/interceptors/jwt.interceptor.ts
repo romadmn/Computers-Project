@@ -16,7 +16,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         let accessToken = null;
-        if(currentUser){
+        if (currentUser) {
             accessToken = currentUser.token.jwt;
         }
 
@@ -35,7 +35,7 @@ export class JwtInterceptor implements HttpInterceptor {
               if (err instanceof HttpErrorResponse && err.status === 403) {
                 return this.logoutAndRedirect(err);
               }
-              const error = err.error.message || err.statusText;
+              const error = err.error.error;
               return throwError(error);
             })
           );
@@ -43,7 +43,7 @@ export class JwtInterceptor implements HttpInterceptor {
     private logoutAndRedirect(err): Observable<HttpEvent<any>> {
         this.authenticationService.logout();
         this.router.navigateByUrl('/login');
-        const error = err.error.message || err.statusText;
+        const error = err.error.error;
         return throwError(error);
     }
     private addAuthorizationHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {

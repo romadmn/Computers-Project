@@ -10,8 +10,8 @@ namespace ComputersApp.Application.Services.Interfaces
     {
         Task<ComputerDto> GetByIdAsync(int computerId);
         Task<List<ComputerDto>> GetAllAsync();
-        Task<bool> UpdateAsync(ComputerDto computer);
-        Task<bool> RemoveAsync(int computerId);
+        Task UpdateAsync(ComputerDto computer);
+        Task RemoveAsync(int computerId);
         Task<ComputerDto> AddAsync(ComputerDto computer);
     }
 }

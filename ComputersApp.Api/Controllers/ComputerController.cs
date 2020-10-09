@@ -27,10 +27,6 @@ namespace ComputersApp.Api.Controllers
         public async Task<ActionResult<ComputerDto>> GetAsync([FromRoute] int id)
         {
             var computer = await _computerService.GetByIdAsync(id);
-            if (computer == null)
-            {
-                return NotFound();
-            }
             return Ok(computer);
         }
 
@@ -40,10 +36,6 @@ namespace ComputersApp.Api.Controllers
         public async Task<ActionResult<List<ComputerDto>>> GetAllAsync()
         {
             var computers = await _computerService.GetAllAsync();
-            if(computers == null)
-            {
-                return NotFound();
-            }
             return Ok(computers);
         }
 
@@ -51,11 +43,7 @@ namespace ComputersApp.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> PutAsync([FromBody] ComputerDto computerDto)
         {
-            var updated = await _computerService.UpdateAsync(computerDto);
-            if (!updated)
-            {
-                return NotFound();
-            }
+            await _computerService.UpdateAsync(computerDto);
             return NoContent();
         }
 
@@ -63,10 +51,6 @@ namespace ComputersApp.Api.Controllers
         [HttpPost("bus")]
         public async Task<ActionResult<ComputerDto>> PostToServiceBusAsync([FromBody] ComputerDto computerDto)
         {
-            if(computerDto == null)
-            {
-                return BadRequest();
-            }
             await _serviceBusTopicSender.SendMessage(computerDto);
             return Ok(computerDto);
         }
@@ -83,11 +67,7 @@ namespace ComputersApp.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            var deleted = await _computerService.RemoveAsync(id);
-            if (!deleted)
-            {
-                return NotFound();
-            }
+            await _computerService.RemoveAsync(id);
             return Ok();
         }
     }

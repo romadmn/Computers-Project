@@ -24,10 +24,6 @@ namespace ComputersApp.Api.Controllers
         public async Task<ActionResult<CpuDto>> GetAsync([FromRoute] int id)
         {
             var computer = await _cpuService.GetByIdAsync(id);
-            if (computer == null)
-            {
-                return NotFound();
-            }
             return Ok(computer);
         }
 
@@ -36,10 +32,6 @@ namespace ComputersApp.Api.Controllers
         public async Task<ActionResult<List<CpuDto>>> GetAllAsync()
         {
             var computers = await _cpuService.GetAllAsync();
-            if (computers == null)
-            {
-                return NotFound();
-            }
             return Ok(computers);
         }
 
@@ -47,11 +39,7 @@ namespace ComputersApp.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> PutAsync([FromBody] CpuDto computerDto)
         {
-            var updated = await _cpuService.UpdateAsync(computerDto);
-            if (!updated)
-            {
-                return NotFound();
-            }
+            await _cpuService.UpdateAsync(computerDto);
             return NoContent();
         }
 
@@ -67,11 +55,7 @@ namespace ComputersApp.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync([FromRoute] int id)
         {
-            var deleted = await _cpuService.RemoveAsync(id);
-            if (!deleted)
-            {
-                return NotFound();
-            }
+            await _cpuService.RemoveAsync(id);
             return Ok();
         }
     }

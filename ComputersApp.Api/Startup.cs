@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using ComputersApp.Api.Middleware;
 
 namespace ComputersApp
 {
@@ -114,6 +115,8 @@ namespace ComputersApp
             //    app.UseExceptionHandler("/Error");
             //    app.UseHsts();
             //}
+
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
             app.UseStaticFiles(new StaticFileOptions()
             {

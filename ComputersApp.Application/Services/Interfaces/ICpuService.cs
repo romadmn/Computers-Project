@@ -10,8 +10,8 @@ namespace ComputersApp.Application.Services.Interfaces
     {
         Task<CpuDto> GetByIdAsync(int cpuId);
         Task<List<CpuDto>> GetAllAsync();
-        Task<bool> UpdateAsync(CpuDto cpu);
-        Task<bool> RemoveAsync(int cpuId);
+        Task UpdateAsync(CpuDto cpu);
+        Task RemoveAsync(int cpuId);
         Task<CpuDto> AddAsync(CpuDto cpu);
     }
 }

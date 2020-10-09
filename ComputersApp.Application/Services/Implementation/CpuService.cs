@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ComputersApp.Application.DataTransferObjects;
+using ComputersApp.Application.Exceptions;
 using ComputersApp.Application.Services.Interfaces;
 using ComputersApp.Domain;
 using ComputersApp.Domain.Entities;
@@ -23,32 +24,38 @@ namespace ComputersApp.Application.Services.Implementation
 
         public async Task<CpuDto> GetByIdAsync(int cpuId)
         {
-            return _mapper.Map<CpuDto>(await _unitOfWork.Repository<Cpu>().FindById(cpuId));
+            var cpu = _mapper.Map<CpuDto>(await _unitOfWork.Repository<Cpu>().FindById(cpuId));
+            if (cpu == null)
+                throw new NotFoundException($"Cpu with id = {cpuId} not found!");
+            return cpu;
         }
 
         public async Task<List<CpuDto>> GetAllAsync()
         {
-            return _mapper.Map<List<CpuDto>>(_unitOfWork.Repository<Cpu>().Find().ToList());
+            var cpus = _mapper.Map<List<CpuDto>>(_unitOfWork.Repository<Cpu>().Find().ToList());
+            if (cpus == null)
+                throw new NotFoundException("Cpus not found!");
+            return cpus;
         }
 
-        public async Task<bool> UpdateAsync(CpuDto cpuDto)
+        public async Task UpdateAsync(CpuDto cpuDto)
         {
             var cpu = _mapper.Map<Cpu>(cpuDto);
             _unitOfWork.Repository<Cpu>().Update(cpu);
             var affectedRows = await _unitOfWork.SaveChangesAsync();
-            return affectedRows > 0;
+            if (affectedRows <= 0)
+                throw new BadRequestException($"Cpu with id = {cpuDto.Id} was not updated!");
         }
 
-        public async Task<bool> RemoveAsync(int cpuId)
+        public async Task RemoveAsync(int cpuId)
         {
             var cpu = await _unitOfWork.Repository<Cpu>().FindById(cpuId);
             if (cpu == null)
-            {
-                return false;
-            }
+                throw new NotFoundException($"Cpu with id = {cpuId} not found!");
             _unitOfWork.Repository<Cpu>().Remove(cpu);
             var affectedRows = await _unitOfWork.SaveChangesAsync();
-            return affectedRows > 0;
+            if (affectedRows <= 0)
+                throw new BadRequestException($"Cpu with id = {cpuId} was not deleted!");
         }
 
         public async Task<CpuDto> AddAsync(CpuDto cpuDto)
@@ -56,7 +63,9 @@ namespace ComputersApp.Application.Services.Implementation
             cpuDto.Id = null;
             var cpu = _mapper.Map<Cpu>(cpuDto);
             await _unitOfWork.Repository<Cpu>().Add(cpu);
-            await _unitOfWork.SaveChangesAsync();
+            var affectedRows = await _unitOfWork.SaveChangesAsync();
+            if (affectedRows <= 0)
+                throw new BadRequestException($"Cpu was not added!");
             return _mapper.Map<CpuDto>(cpu);
         }
     }
