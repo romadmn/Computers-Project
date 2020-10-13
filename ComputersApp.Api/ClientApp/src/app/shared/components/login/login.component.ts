@@ -11,7 +11,7 @@ import { IUser } from 'src/app/core/models/user';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  public loginForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;

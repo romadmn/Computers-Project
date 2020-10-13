@@ -13,8 +13,7 @@ import { ComputerAddDialogComponent } from '../computer-add-dialog/computer-add-
   styleUrls: ['./computers.component.scss']
 })
 export class ComputersComponent implements OnInit {
-  
-  @ViewChild(RefDirective, {static: false}) refDir: RefDirective;
+   @ViewChild(RefDirective, {static: false}) refDir: RefDirective;
   computers: IComputer[];
 
   constructor(private computerService: ComputerService,

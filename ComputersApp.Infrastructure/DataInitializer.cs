@@ -20,6 +20,12 @@ namespace ComputersApp.Infrastructure
                         Email = "ferencrman@gmail.com",
                         Password = "MyPassword111",
                         Role = "Admin"
+                    },
+                    new User
+                    {
+                        Email = "ferencrman2@gmail.com",
+                        Password = "MyPassword111",
+                        Role = "User"
                     }
                 );
                 context.SaveChanges();

@@ -8,7 +8,7 @@ import { Role } from '../models/role.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<IUser>;
+    public currentUserSubject: BehaviorSubject<IUser>;
     public currentUser: Observable<IUser>;
     jwtHelper = new JwtHelperService();
 

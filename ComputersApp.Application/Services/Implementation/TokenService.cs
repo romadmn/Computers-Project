@@ -55,7 +55,7 @@ namespace ComputersApp.Application.Services.Implementation
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Issuer"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(1),
+                expires: DateTime.UtcNow.AddDays(7),
                 signingCredentials: credentials);
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
             return encodedToken;

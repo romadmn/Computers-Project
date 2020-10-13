@@ -27,12 +27,20 @@ namespace ComputersApp.Api.Controllers
             _userService = userService;
         }
 
-        // GET: api/Computer/5
+        // GET: api/User/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetAsync([FromRoute] int id)
         {
             var user = await _userService.GetByIdAsync(id);
             return Ok(user);
+        }
+
+        // DELETE: api/User/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+        {
+            await _userService.RemoveAsync(id);
+            return Ok();
         }
 
         // POST: api/user

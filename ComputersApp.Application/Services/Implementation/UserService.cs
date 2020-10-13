@@ -39,6 +39,17 @@ namespace ComputersApp.Application.Services.Implementation
                 throw new BadRequestException($"User with id = {user.Id} was not updated!");
         }
 
+        public async Task RemoveAsync(int userId)
+        {
+            var user = await _unitOfWork.Repository<User>().FindById(userId);
+            if (user == null)
+                throw new NotFoundException($"User with id = {userId} not found!");
+            _unitOfWork.Repository<User>().Remove(user);
+            var affectedRows = await _unitOfWork.SaveChangesAsync();
+            if (affectedRows <= 0)
+                throw new BadRequestException($"User with id = {userId} was not deleted!");
+        }
+
         public async Task<User> AddAsync(RegisterDto registerDto)
         {
             var userWithTheSameEmail = _unitOfWork.Repository<User>().Find(new LoginSpecification(registerDto.Email)).SingleOrDefault();

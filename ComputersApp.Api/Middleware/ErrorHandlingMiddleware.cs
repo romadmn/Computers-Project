@@ -15,10 +15,16 @@ namespace ComputersApp.Api.Middleware
 {
     public class ErrorHandlingMiddleware
     {
+        private static Dictionary<Type, HttpStatusCode> _exceptions;
         private readonly RequestDelegate _next;
 
         public ErrorHandlingMiddleware(RequestDelegate next)
         {
+            _exceptions = new Dictionary<Type, HttpStatusCode>();
+            _exceptions.Add(typeof(BadRequestException), HttpStatusCode.BadRequest);
+            _exceptions.Add(typeof(NotFoundException), HttpStatusCode.NotFound);
+            _exceptions.Add(typeof(InvalidCredentialException), HttpStatusCode.Forbidden);
+            _exceptions.Add(typeof(SecurityTokenException), HttpStatusCode.Forbidden);
             _next = next;
         }
 
@@ -39,27 +45,11 @@ namespace ComputersApp.Api.Middleware
             HttpStatusCode status;
             string message;
             var stackTrace = string.Empty;
-
             var exceptionType = exception.GetType();
-            if (exceptionType == typeof(BadRequestException))
+            if (_exceptions.ContainsKey(exceptionType))
             {
+                status = _exceptions[exceptionType];
                 message = exception.Message;
-                status = HttpStatusCode.BadRequest;
-            }
-            else if (exceptionType == typeof(NotFoundException))
-            {
-                message = exception.Message;
-                status = HttpStatusCode.NotFound;
-            }
-            else if (exceptionType == typeof(InvalidCredentialException))
-            {
-                message = exception.Message;
-                status = HttpStatusCode.Forbidden;
-            }
-            else if (exceptionType == typeof(SecurityTokenException))
-            {
-                message = exception.Message;
-                status = HttpStatusCode.Forbidden;
             }
             else
             {

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://on.cypress.io/cypress.schema.json",
+  "chromeWebSecurity": false,
+  "baseUrl": "https://localhost:32768",
+  "fixturesFolder": "tests/fixtures",
+  "integrationFolder": "tests/integration",
+  "pluginsFile": "tests/plugins/index.js",
+  "supportFile": "tests/support/index.js",
+  "screenshotsFolder": "output/e2e/screenshots",
+  "videosFolder": "output/e2e/videos",
+  "projectId": "65goq9"
+}

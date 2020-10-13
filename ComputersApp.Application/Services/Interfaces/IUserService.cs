@@ -12,5 +12,6 @@ namespace ComputersApp.Application.Services.Interfaces
         Task<User> GetByIdAsync(int userId);
         Task UpdateAsync(User user);
         Task<User> AddAsync(RegisterDto registerDto);
+        Task RemoveAsync(int computerId);
     }
 }

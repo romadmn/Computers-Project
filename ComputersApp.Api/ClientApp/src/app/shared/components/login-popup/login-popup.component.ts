@@ -18,8 +18,6 @@ export class LoginPopupComponent implements OnInit {
   error = '';
 
   constructor(private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {

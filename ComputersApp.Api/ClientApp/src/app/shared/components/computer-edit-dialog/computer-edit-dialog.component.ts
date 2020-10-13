@@ -15,13 +15,14 @@ export class ComputerEditDialogComponent implements OnInit {
 
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
   @Input() computer: IComputer;
-  editComputerForm: FormGroup;
+  public editComputerForm: FormGroup;
   cpus: ICpu[];
   submitted = false;
   loading = false;
   error = '';
 
-  constructor(private computerService: ComputerService, private cpuService: CpuService ) { }
+  constructor(private computerService: ComputerService, private cpuService: CpuService ) { 
+  }
 
   ngOnInit(): void {
     this.editComputerForm = new FormGroup({

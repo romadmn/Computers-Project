@@ -11,7 +11,7 @@ import { UserService } from 'src/app/core/services/user.service';
 export class RegisterComponent implements OnInit {
 
   @Output() onCancel: EventEmitter<void> = new EventEmitter<void>();
-  registerForm: FormGroup;
+  public registerForm: FormGroup;
   submitted = false;
   loading = false;
   error = '';
