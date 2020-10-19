@@ -16,6 +16,7 @@ describe('AuthGuard', () => {
   let routerMock = {navigate: jasmine.createSpy('navigate')}
 
   beforeEach(() => {
+    // Arrange
   TestBed.configureTestingModule({
     providers: [AuthGuard, { provide: Router, useValue: routerMock }],
     imports: [HttpClientTestingModule]
@@ -26,20 +27,29 @@ describe('AuthGuard', () => {
 });
 
   it('should be created', () => {
+    // Assert
     expect(guard).toBeTruthy();
   });
 
   it('should redirect an unauthenticated user to the login route', () => {
+    // Act
     authService.currentUserSubject.next(null);
+
+    // Assert
     expect(guard.canActivate(routeMock, routeStateMock)).toEqual(false);
     expect(routerMock.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: routeStateMock.url  } });
   });
 
   it('should allow the authenticated user to access app', () => {
+    // Arrange
     const currentUser: IUser = { email: 'ferencrman@gmail.com', password: 'pass',
     token: {jwt: 'jwt', refreshToken: 'refreshToken'}};
-    authService.currentUserSubject.next(currentUser);
     spyOn(authService, 'getUserRole').and.returnValue(Role.Admin);
+
+    // Act
+    authService.currentUserSubject.next(currentUser);
+
+    // Assert
     expect(guard.canActivate(routeMock, routeStateMock)).toEqual(true);
   });
 });

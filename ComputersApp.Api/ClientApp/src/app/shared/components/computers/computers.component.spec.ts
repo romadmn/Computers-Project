@@ -37,6 +37,7 @@ describe('ComputersComponent', () => {
 
 
   beforeEach(async(() => {
+    // Arrange
     TestBed.configureTestingModule({
       imports: [BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot([]),
         ReactiveFormsModule],
@@ -71,15 +72,22 @@ describe('ComputersComponent', () => {
   }));
 
   it('should create the ComputerAddDialogComponent', () => {
+    // Arrange
     const fixture: ComponentFixture<ComputerAddDialogComponent> = TestBed.createComponent(ComputerAddDialogComponent);
     computerAddComponent = fixture.componentInstance;
     componentFactoryResolver = fixture.debugElement.injector.get<ComponentFactoryResolver>(ComponentFactoryResolver as any);
+
+    // Act
     fixture.detectChanges();
+
+    // Assert
     expect(computerAddComponent).toBeTruthy();
+
     document.body.removeChild(fixture.debugElement.nativeElement);
   });
 
   it('should create the ComputerEditDialogComponent', () => {
+    // Arrange
     const cpus: ICpu[] = [
       { id: 1, name: 'Intel Core', corsAmount: 4, frequency: 3600, computers: null}
     ];
@@ -92,36 +100,59 @@ describe('ComputersComponent', () => {
     spyOn(cpuService, 'getAll').and.callFake(() => {
       return of(cpus);
     });
+
+    // Act
     fixture.detectChanges();
+
+    // Assert
     expect(computerEditComponent).toBeTruthy();
+
     document.body.removeChild(fixture.debugElement.nativeElement);
   });
 
   it('should create the LoginPopUpComponent', () => {
+    // Arrange
     const fixture: ComponentFixture<LoginPopupComponent> = TestBed.createComponent(LoginPopupComponent);
     loginComponent = fixture.componentInstance;
     componentFactoryResolver = fixture.debugElement.injector.get<ComponentFactoryResolver>(ComponentFactoryResolver as any);
+
+    // Act
     fixture.detectChanges();
+
+    // Assert
     expect(loginComponent).toBeTruthy();
+
     document.body.removeChild(fixture.debugElement.nativeElement);
   });
 
   it('should create the RegisterComponent', () => {
+    // Arrange
     const fixture: ComponentFixture<RegisterComponent> = TestBed.createComponent(RegisterComponent);
     registerComponent = fixture.componentInstance;
     componentFactoryResolver = fixture.debugElement.injector.get<ComponentFactoryResolver>(ComponentFactoryResolver as any);
+
+    // Act
     fixture.detectChanges();
+
+    // Assert
     expect(registerComponent).toBeTruthy();
+
     document.body.removeChild(fixture.debugElement.nativeElement);
   });
 
   it('should set computers property with the items returned from the server', () => {
+    // Act
     component.ngOnInit();
+
+    // Assert
     expect(component.computers).toBe(computers);
   });
 
   it('should call the server to delete a computer', () => {
+    // Act
     component.deleteComputer(1);
+
+    // Assert
     expect(computers.length).toBe(1);
     expect(getAllSpy).toHaveBeenCalled();
     expect(deleteSpy).toHaveBeenCalledWith(1);
